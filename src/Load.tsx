@@ -12,6 +12,7 @@ export const Load: React.VFC<{ onLoad: (csv: string) => void }> = Sentry.withPro
 
                 <input
                     type="file"
+                    accept=".csv"
                     className={styles.FileInput}
                     onChange={async (e) => {
                         const file = e.target.files?.[0];
