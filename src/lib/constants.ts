@@ -1,5 +1,3 @@
-export const GOOGLE_API_KEY = 'AIzaSyDCQk8MMZC-sM6-ViAl0GnVtYUe4Rlw-C4';
-
 export const A_GRAVITY = 9.80665; // Standard acceleration due to gravity (m/s^2)
 export const SL_PRESSURE = 101325; // Sea level pessure (Pa)
 export const LAPSE_RATE = 0.0065; // Temperature lapse rate (K/m)
