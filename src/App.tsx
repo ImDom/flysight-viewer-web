@@ -39,6 +39,7 @@ function App() {
             ) : (
                 <Load
                     onLoad={(newCsv) => {
+                        trackRef.current = undefined;
                         setCsv(newCsv);
                     }}
                 />
