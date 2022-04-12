@@ -8,10 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@googlemaps/react-wrapper": "^1.1.30",
     "@react-hookz/web": "^13.2.1",
+    "@sentry/react": "^6.19.6",
+    "@sentry/tracing": "^6.19.6",
     "apexcharts": "^3.35.0",
-    "googleapis": "^100.0.0",
     "ol": "^6.14.1",
     "papaparse": "^5.3.2",
     "react": "^18.0.0",
@@ -20,7 +20,6 @@
     "react-responsive": "^9.0.0-beta.6"
   },
   "devDependencies": {
-    "@types/google.maps": "^3.48.5",
     "@types/papaparse": "^5.3.2",
     "@types/react": "^18.0.1",
     "@types/react-dom": "^18.0.0",

@@ -1,8 +1,10 @@
+import * as Sentry from '@sentry/react';
+
 import styles from './Load.module.css';
 
 import csv from './test.csv?raw';
 
-export const Load: React.VFC<{ onLoad: (csv: string) => void }> = ({ onLoad }) => {
+export const Load: React.VFC<{ onLoad: (csv: string) => void }> = Sentry.withProfiler(({ onLoad }) => {
     return (
         <div className={styles.Load}>
             <div className={styles.Dialog}>
@@ -32,4 +34,4 @@ export const Load: React.VFC<{ onLoad: (csv: string) => void }> = ({ onLoad }) =
             </div>
         </div>
     );
-};
+});

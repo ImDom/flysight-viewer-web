@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import * as Sentry from '@sentry/react';
 import { Map as OpenLayersMap, View as OpenLayersView, Feature as OpenLayersFeature } from 'ol';
 import { fromLonLat } from 'ol/proj';
 import { Tile as LayerTile, Vector as LayerVector } from 'ol/layer';
@@ -9,7 +10,7 @@ import { LineString as GeomLineString } from 'ol/geom';
 import 'ol/ol.css';
 import { Track } from './lib/Track';
 
-export const Map: React.VFC<{ track: Track }> = ({ track }) => {
+export const Map: React.VFC<{ track: Track }> = Sentry.withProfiler(({ track }) => {
     const elRef = useRef<HTMLDivElement>(null);
     const olRef = useRef<OpenLayersMap>();
 
@@ -81,4 +82,4 @@ export const Map: React.VFC<{ track: Track }> = ({ track }) => {
     });
 
     return <div style={{ width: '100%', height: '100%' }} ref={elRef} />;
-};
+});

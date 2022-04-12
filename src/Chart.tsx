@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import * as Sentry from '@sentry/react';
 import { useMediaQuery } from 'react-responsive';
 import { ApexOptions } from 'apexcharts';
 import ApexChart from 'react-apexcharts';
@@ -7,7 +8,7 @@ import { Track } from './lib/Track';
 import { Unit } from './lib/types';
 import { getDistanceDisplayUnit, getSpeedDisplayUnit } from './lib/utils';
 
-export const Chart: React.VFC<{ track: Track; unit: Unit }> = ({ track, unit }) => {
+export const Chart: React.VFC<{ track: Track; unit: Unit }> = Sentry.withProfiler(({ track, unit }) => {
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
     const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
 
@@ -134,4 +135,4 @@ export const Chart: React.VFC<{ track: Track; unit: Unit }> = ({ track, unit }) 
     }, [track, unit, isTabletOrMobile, isPortrait]);
 
     return <ApexChart options={options} series={series} width="100%" height={320} />;
-};
+});
