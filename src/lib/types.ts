@@ -1,4 +1,4 @@
 export enum Unit {
-    Matric,
+    Metric,
     Imperial,
 }

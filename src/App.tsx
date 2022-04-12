@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import * as Sentry from '@sentry/react';
 import { useRerender } from '@react-hookz/web';
 
@@ -35,20 +36,24 @@ export const App: React.VFC = Sentry.withErrorBoundary(
         return (
             <div className={styles.App}>
                 {trackRef.current ? (
-                    <>
+                    <div className={styles.ChartMap}>
+                        <Helmet>
+                            <meta name="theme-color" content="#fff" />
+                        </Helmet>
                         <Chart
                             track={trackRef.current}
                             unit={unit}
                             setActiveDatapointIndex={(index) => setActiveDatapointIndex(index)}
                         />
                         <Map track={trackRef.current} activeDatapointIndex={activeDatapointIndex} />
-                    </>
+                    </div>
                 ) : (
                     <Load
                         onLoad={(newCsv) => {
                             trackRef.current = undefined;
                             setCsv(newCsv);
                         }}
+                        setUnit={setUnit}
                     />
                 )}
             </div>

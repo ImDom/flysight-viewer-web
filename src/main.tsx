@@ -1,10 +1,12 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { HelmetProvider } from 'react-helmet-async';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
 
 import { App } from './App';
 
+import 'normalize.css/normalize.css';
 import './index.css';
 
 Sentry.init({
@@ -21,6 +23,8 @@ const root = createRoot(rootElement);
 
 root.render(
     <React.StrictMode>
-        <App />
+        <HelmetProvider>
+            <App />
+        </HelmetProvider>
     </React.StrictMode>
 );

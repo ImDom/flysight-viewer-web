@@ -1,5 +1,16 @@
 .App {
     height: 100%;
+}
+
+.ChartMap {
+    height: 100%;
     display: grid;
     grid-template-rows: 335px 1fr;
+
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.ChartMap svg text {
+    cursor: default;
 }
