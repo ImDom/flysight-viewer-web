@@ -13,7 +13,7 @@ function App() {
     const rerender = useRerender();
     const trackRef = useRef<Track>();
 
-    const [csv, setCsv] = useState<string>(null);
+    const [csv, setCsv] = useState<string | null>(null);
     const [unit, setUnit] = useState(Unit.Imperial);
 
     useEffect(() => {
