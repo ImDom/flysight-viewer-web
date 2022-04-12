@@ -74,6 +74,10 @@ export const Map: React.VFC<{ track: Track }> = ({ track }) => {
         }
 
         olRef.current = map;
+        return () => {
+            map.dispose();
+            olRef.current = undefined;
+        };
     });
 
     return <div style={{ width: '100%', height: '100%' }} ref={elRef} />;
