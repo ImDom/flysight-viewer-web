@@ -15,6 +15,7 @@ export const App: React.VFC = Sentry.withErrorBoundary(
         const rerender = useRerender();
         const trackRef = useRef<Track>();
 
+        const [activeDatapointIndex, setActiveDatapointIndex] = useState<number | null>(null);
         const [csv, setCsv] = useState<string | null>(null);
         const [unit, setUnit] = useState(Unit.Imperial);
 
@@ -35,8 +36,12 @@ export const App: React.VFC = Sentry.withErrorBoundary(
             <div className={styles.App}>
                 {trackRef.current ? (
                     <>
-                        <Chart track={trackRef.current} unit={unit} />
-                        <Map track={trackRef.current} />
+                        <Chart
+                            track={trackRef.current}
+                            unit={unit}
+                            setActiveDatapointIndex={(index) => setActiveDatapointIndex(index)}
+                        />
+                        <Map track={trackRef.current} activeDatapointIndex={activeDatapointIndex} />
                     </>
                 ) : (
                     <Load
