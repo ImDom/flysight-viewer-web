@@ -5,7 +5,7 @@ import { Unit } from './lib/types';
 
 import styles from './Load.module.css';
 
-import csv from './test.csv?raw';
+import sampleCsv from './test.csv?raw';
 
 export const Load: React.VFC<{ onLoad: (csv: string) => void; setUnit: (unit: Unit) => void }> = Sentry.withProfiler(
     ({ onLoad, setUnit }) => {
@@ -56,7 +56,7 @@ export const Load: React.VFC<{ onLoad: (csv: string) => void; setUnit: (unit: Un
                         className={styles.Link}
                         onClick={(e) => {
                             e.preventDefault();
-                            onLoad(csv);
+                            onLoad(sampleCsv);
                         }}
                     >
                         Load Sample

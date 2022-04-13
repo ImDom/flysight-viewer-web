@@ -6,10 +6,12 @@ import { useRerender } from '@react-hookz/web';
 import { Track } from './lib/Track';
 import { Map } from './Map';
 import { Unit } from './lib/types';
-import { Chart } from './Chart';
+import { Chart } from './Chart2';
 
 import styles from './App.module.css';
 import { Load } from './Load';
+
+import devCsv from './test.csv?raw';
 
 export const App: React.VFC = Sentry.withErrorBoundary(
     Sentry.withProfiler(() => {
@@ -17,7 +19,7 @@ export const App: React.VFC = Sentry.withErrorBoundary(
         const trackRef = useRef<Track>();
 
         const [activeDatapointIndex, setActiveDatapointIndex] = useState<number | null>(null);
-        const [csv, setCsv] = useState<string | null>(null);
+        const [csv, setCsv] = useState<string | null>(import.meta.env.DEV ? devCsv : null);
         const [unit, setUnit] = useState(Unit.Imperial);
 
         useEffect(() => {

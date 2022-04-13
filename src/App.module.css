@@ -5,7 +5,7 @@
 .ChartMap {
     height: 100%;
     display: grid;
-    grid-template-rows: 335px 1fr;
+    grid-template-rows: 315px 1fr;
 
     -webkit-user-select: none;
     user-select: none;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import * as Sentry from '@sentry/react';
 import { BrowserTracing } from '@sentry/tracing';
@@ -19,12 +19,12 @@ const rootElement = document.getElementById('root');
 if (!rootElement) {
     throw new Error('Missing root element!');
 }
-const root = createRoot(rootElement);
 
-root.render(
+ReactDOM.render(
     <React.StrictMode>
         <HelmetProvider>
             <App />
         </HelmetProvider>
-    </React.StrictMode>
+    </React.StrictMode>,
+    rootElement
 );
