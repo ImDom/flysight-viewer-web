@@ -4,6 +4,7 @@ import {
     Chart as ChartJS,
     ChartData,
     ChartOptions,
+    Legend,
     LinearScale,
     LineController,
     LineElement,
@@ -21,8 +22,19 @@ import { Unit } from './lib/types';
 
 import styles from './Chart2.module.css';
 import { getDistanceDisplayUnit, getSpeedDisplayUnit } from './lib/utils';
+import { useMediaQuery } from 'react-responsive';
 
-ChartJS.register(zoomPlugin, LineController, LineElement, LinearScale, PointElement, Title, CategoryScale, Tooltip);
+ChartJS.register(
+    zoomPlugin,
+    LineController,
+    LineElement,
+    LinearScale,
+    PointElement,
+    Title,
+    CategoryScale,
+    Tooltip,
+    Legend
+);
 
 ChartJS.defaults.elements.line.borderWidth = 1;
 
@@ -41,6 +53,10 @@ export const Chart: React.VFC<{
     unit: Unit;
     setActiveDatapointIndex: (index: number | null) => void;
 }> = ({ track, unit, setActiveDatapointIndex }) => {
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+    const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
+    const isNarrow = isTabletOrMobile && isPortrait;
+
     const distanceUnitSuffix = ` (${unit === Unit.Imperial ? 'ft' : 'm'})`;
     const speedUnitSuffix = ` (${unit === Unit.Imperial ? 'mph' : 'km/h'})`;
 
@@ -135,6 +151,12 @@ export const Chart: React.VFC<{
             animation: false,
             // stacked: false,
             plugins: {
+                legend: {
+                    labels: {
+                        boxHeight: 5,
+                        boxWidth: 5,
+                    },
+                },
                 decimation: {
                     enabled: true,
                     algorithm: 'min-max',
@@ -163,7 +185,7 @@ export const Chart: React.VFC<{
             scales: {
                 y: {
                     type: 'linear',
-                    display: true,
+                    display: !isNarrow,
                     position: 'right',
                     title: { display: true, text: 'Elevation' + distanceUnitSuffix, color: '#000000' },
                     min: 0,
@@ -171,7 +193,7 @@ export const Chart: React.VFC<{
                 },
                 y1: {
                     type: 'linear',
-                    display: true,
+                    display: !isNarrow,
                     position: 'left',
                     title: { display: true, text: 'Horizontal Speed' + speedUnitSuffix, color: '#ff0000' },
                     min: speedMin,
@@ -184,7 +206,7 @@ export const Chart: React.VFC<{
                 },
                 y2: {
                     type: 'linear',
-                    display: true,
+                    display: !isNarrow,
                     position: 'left',
                     title: { display: true, text: 'Vertical Speed' + speedUnitSuffix, color: '#00ff00' },
                     min: speedMin,
@@ -197,7 +219,7 @@ export const Chart: React.VFC<{
                 },
                 y3: {
                     type: 'linear',
-                    display: true,
+                    display: !isNarrow,
                     position: 'left',
                     title: { display: true, text: 'Glide Ratio', color: '#0000ff' },
                     min: glideRatioMin,
@@ -210,7 +232,7 @@ export const Chart: React.VFC<{
                 },
             },
         }),
-        [elevationMax, speedMin, speedMax, glideRatioMin, glideRatioMax]
+        [isNarrow, elevationMax, speedMin, speedMax, glideRatioMin, glideRatioMax]
     );
 
     const plugins: Plugin<'line'>[] = useMemo(
