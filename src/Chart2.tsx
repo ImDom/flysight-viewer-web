@@ -41,18 +41,19 @@ export const Chart: React.VFC<{
     unit: Unit;
     setActiveDatapointIndex: (index: number | null) => void;
 }> = ({ track, unit, setActiveDatapointIndex }) => {
-    const eventRef = useRef({ lastX: -1 });
+    const distanceUnitSuffix = ` (${unit === Unit.Imperial ? 'ft' : 'm'})`;
+    const speedUnitSuffix = ` (${unit === Unit.Imperial ? 'mph' : 'km/h'})`;
 
     const elevationData = useMemo<ParsedDataType<'line'>[]>(
-        () => track.datapoints.map((d, i) => ({ x: i, y: d.elevation })),
+        () => track.datapoints.map((d, i) => ({ x: i, y: getDistanceDisplayUnit(unit, d.elevation) })),
         [unit, track.datapoints]
     );
     const horizontalSpeedData = useMemo<ParsedDataType<'line'>[]>(
-        () => track.datapoints.map((d, i) => ({ x: i, y: d.horizontalSpeed })),
+        () => track.datapoints.map((d, i) => ({ x: i, y: getSpeedDisplayUnit(unit, d.horizontalSpeed) })),
         [unit, track.datapoints]
     );
     const verticalSpeedData = useMemo<ParsedDataType<'line'>[]>(
-        () => track.datapoints.map((d, i) => ({ x: i, y: d.verticalSpeed })),
+        () => track.datapoints.map((d, i) => ({ x: i, y: getSpeedDisplayUnit(unit, d.verticalSpeed) })),
         [unit, track.datapoints]
     );
     const glideRatioData = useMemo<ParsedDataType<'line'>[]>(
@@ -164,7 +165,7 @@ export const Chart: React.VFC<{
                     type: 'linear',
                     display: true,
                     position: 'right',
-                    title: { display: true, text: 'Elevation', color: '#000000' },
+                    title: { display: true, text: 'Elevation' + distanceUnitSuffix, color: '#000000' },
                     min: 0,
                     max: elevationMax,
                 },
@@ -172,7 +173,7 @@ export const Chart: React.VFC<{
                     type: 'linear',
                     display: true,
                     position: 'left',
-                    title: { display: true, text: 'Horizontal Speed', color: '#ff0000' },
+                    title: { display: true, text: 'Horizontal Speed' + speedUnitSuffix, color: '#ff0000' },
                     min: speedMin,
                     max: speedMax,
 
@@ -185,7 +186,7 @@ export const Chart: React.VFC<{
                     type: 'linear',
                     display: true,
                     position: 'left',
-                    title: { display: true, text: 'Vertical Speed', color: '#00ff00' },
+                    title: { display: true, text: 'Vertical Speed' + speedUnitSuffix, color: '#00ff00' },
                     min: speedMin,
                     max: speedMax,
 
