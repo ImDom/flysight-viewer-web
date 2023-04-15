@@ -28,26 +28,19 @@ export const Chart: React.VFC<{
         () => track.datapoints.map((d) => getDistanceDisplayUnit(unit, d.elevation)),
         [unit, track.datapoints]
     );
-    const horizontalSpeeds = useMemo(
-        () => track.datapoints.map((d) => getSpeedDisplayUnit(unit, d.horizontalSpeed)),
+    const groundSpeeds = useMemo(
+        () => track.datapoints.map((d) => getSpeedDisplayUnit(unit, d.groundSpeed)),
         [unit, track.datapoints]
     );
-    const verticalSpeeds = useMemo(
-        () => track.datapoints.map((d) => getSpeedDisplayUnit(unit, d.verticalSpeed)),
-        [unit, track.datapoints]
-    );
-    const glideRatios = useMemo(() => track.datapoints.map((d) => d.glideRatio), [track.datapoints]);
 
     const speedMin = useMemo(
-        () => Math.floor(Math.min(Math.min(...horizontalSpeeds), Math.min(...verticalSpeeds))),
-        [horizontalSpeeds, verticalSpeeds]
+        () => Math.floor(Math.min(...groundSpeeds)),
+        [groundSpeeds]
     );
     const speedMax = useMemo(
-        () => Math.ceil(Math.max(Math.max(...horizontalSpeeds), Math.max(...verticalSpeeds))),
-        [horizontalSpeeds, verticalSpeeds]
+        () => Math.ceil(Math.max(...groundSpeeds)),
+        [groundSpeeds]
     );
-    const glideRatioMin = useMemo(() => Math.floor(Math.min(...glideRatios)), [glideRatios]);
-    const glideRatioMax = useMemo(() => Math.ceil(Math.max(...glideRatios)), [glideRatios]);
 
     const yAxis = useMemo<ApexYAxis[]>(() => {
         const showYAxis = !isTabletOrMobile || !isPortrait;
@@ -75,9 +68,9 @@ export const Chart: React.VFC<{
             },
             {
                 show: showYAxis,
-                seriesName: 'Horizontal Speed',
+                seriesName: 'Ground Speed',
                 title: {
-                    text: 'Horizontal Speed' + speedUnitSuffix,
+                    text: 'Ground Speed' + speedUnitSuffix,
                     style: {
                         color: '#ff0000',
                     },
@@ -92,42 +85,6 @@ export const Chart: React.VFC<{
                     },
                 },
             },
-            {
-                show: showYAxis,
-                seriesName: 'Vertical Speed',
-                title: {
-                    text: 'Vertical Speed' + speedUnitSuffix,
-                    style: {
-                        color: '#00ff00',
-                    },
-                },
-                min: speedMin,
-                max: speedMax,
-                forceNiceScale: true,
-                labels: {
-                    formatter: (value, opts) => {
-                        return typeof opts === 'number' ? value.toFixed(0) : value.toFixed(2);
-                    },
-                },
-            },
-            {
-                show: showYAxis,
-                seriesName: 'Glide Ratio',
-                title: {
-                    text: 'Glide Ratio',
-                    style: {
-                        color: '#0000ff',
-                    },
-                },
-                min: glideRatioMin,
-                max: glideRatioMax,
-                forceNiceScale: true,
-                labels: {
-                    formatter: (value, opts) => {
-                        return typeof opts === 'number' ? value.toFixed(0) : value.toFixed(4);
-                    },
-                },
-            },
         ];
     }, [
         isPortrait,
@@ -135,10 +92,6 @@ export const Chart: React.VFC<{
         distanceUnitSuffix,
         speedUnitSuffix,
         elevations,
-        glideRatioMax,
-        glideRatioMin,
-        speedMax,
-        speedMin,
     ]);
 
     useEffect(() => {
@@ -150,25 +103,13 @@ export const Chart: React.VFC<{
                 type: 'line',
             },
             {
-                name: 'Horizontal Speed',
-                data: horizontalSpeeds,
+                name: 'Ground Speed',
+                data: groundSpeeds,
                 color: '#ff0000',
                 type: 'line',
-            },
-            {
-                name: 'Vertical Speed',
-                data: verticalSpeeds,
-                color: '#00ff00',
-                type: 'line',
-            },
-            {
-                name: 'Glide Ratio',
-                data: glideRatios,
-                color: '#0000ff',
-                type: 'line',
-            },
+            }
         ]);
-    }, [elevations, horizontalSpeeds, verticalSpeeds, glideRatios]);
+    }, [elevations]);
 
     useEffect(() => {
         setOptions({

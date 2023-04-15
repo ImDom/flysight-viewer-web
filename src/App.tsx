@@ -19,7 +19,7 @@ export const App: React.VFC = Sentry.withErrorBoundary(
         const trackRef = useRef<Track>();
 
         const [activeDatapointIndex, setActiveDatapointIndex] = useState<number | null>(null);
-        const [csv, setCsv] = useState<string | null>(import.meta.env.DEV ? devCsv : null);
+        const [csv, setCsv] = useState<string | null>(import.meta.env.DEV && false ? devCsv : null);
         const [unit, setUnit] = useState(Unit.Imperial);
 
         useEffect(() => {

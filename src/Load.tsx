@@ -18,7 +18,7 @@ export const Load: React.VFC<{ onLoad: (csv: string) => void; setUnit: (unit: Un
                 </Helmet>
 
                 <div className={styles.Dialog}>
-                    <div className={styles.DialogTitle}>Load FlySight CSV</div>
+                    <div className={styles.DialogTitle}>Load Flight CSV</div>
 
                     <div className={styles.UnitSelect}>
                         <label htmlFor="input-unit">Units</label>
