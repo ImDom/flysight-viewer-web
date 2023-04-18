@@ -61,8 +61,11 @@ export class Datapoint {
 
     constructor(public raw?: RawFlysight) {
         if (this.raw) {
-            this.rtcDateTime = new Date(this.raw.rtcDate + ' ' + this.raw.rtcTime);
-            this.gpsDateTime = new Date(this.raw.gps_Date + ' ' + this.raw.gps_Time);
+            this.rtcDateTime = new Date(this.raw.rtcDate + ' ' + this.raw.rtcTime.split('.')[0]);
+            this.rtcDateTime.setMilliseconds(parseInt(this.raw.rtcTime.split('.')[1], 10));
+
+            this.gpsDateTime = new Date(this.raw.gps_Date + ' ' + this.raw.gps_Time.split('.')[0]);
+            this.gpsDateTime.setMilliseconds(parseInt(this.raw.gps_Time.split('.')[1], 10));
 
             this.lat = parseFloat(this.raw.gps_Lat) / 10000000;
             this.lon = parseFloat(this.raw.gps_Long) / 10000000;

@@ -39,7 +39,8 @@ export const Load: React.VFC<{ onLoad: (csv: string) => void; setUnit: (unit: Un
                             style={{ display: 'none' }}
                             ref={fileInputRef}
                             type="file"
-                            accept=".csv"
+                            // accept csv or txt files
+                            accept=".csv,.txt"
                             className={styles.FileInput}
                             onChange={async (e) => {
                                 const file = e.target.files?.[0];

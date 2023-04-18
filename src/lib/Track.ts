@@ -63,8 +63,20 @@ export class Track {
             header: true,
             skipEmptyLines: true,
         });
-        parsed.data.forEach((rawPoint) => {
-            if (rawPoint.gps_FixType === '0') return;
+
+        let highestIndex = 0;
+        parsed.data.forEach((rawPoint, i) => {
+            if (rawPoint.gps_FixType === '0' || rawPoint.gps_FixType === '1') return;
+            const highestPoint = parsed.data[highestIndex];
+            if (parseInt(rawPoint.gps_Alt, 10) > parseInt(highestPoint.gps_Alt, 10)) {
+                highestIndex = i;
+            }
+        });
+
+        parsed.data.forEach((rawPoint, i) => {
+            if (rawPoint.gps_FixType === '0' || rawPoint.gps_FixType === '1') return;
+            if (i < highestIndex) return;
+
             this.datapoints.push(new Datapoint(rawPoint));
         });
 
